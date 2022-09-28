@@ -66,7 +66,7 @@ Set webhook as: `http(s)://{domain or IP}/webhook`
 
 ![img.png](images/review-done.png)
 
-6.1. If `fulano` does not want to be bothered with this review anymore, he can click in "Não notificar" and the notifications to this review will stop, he will be able to signalize that the review as done yet though.
+6.1. If `fulano` does not want to be bothered with this review anymore, he can click in "Não notificar" and the notifications to this review will stop, he will be able to signalize that the review was done yet though.
 
 7. If `fulano` or you do not want to receive notifications at all, the `/unsubscribe` command its available
 
