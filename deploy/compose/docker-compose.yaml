@@ -1,0 +1,39 @@
+services:
+
+  db:
+    image: ojalmeida/shortcut-telegram-integration-db:1.0
+    environment:
+      POSTGRES_PASSWORD: &db_pass postgres
+      POSTGRES_DATABSE: &db_dbname postgres
+      POSTGRES_USER: &db_user postgres
+    volumes:
+      - db-volume:/var/lib/postgresql/data
+  bot:
+    image: ojalmeida/shortcut-telegram-integration-bot:1.0
+    environment:
+      DB_ADDR: db:5432
+      DB_USER: *db_user
+      DB_PASSWORD: *db_pass
+      DB_DBNAME: *db_dbname
+      TELEGRAM_TOKEN: "[telegram bot token here, obtainable via: @BotFather on telegram]"
+      TELEGRAM_AUTHORIZATION_TOKEN: "[custom hexadecimal token here, optional, default = 21f4257178c7cde44926b16f1482e2bf]"
+      TELEGRAM_NOTIFICATION_RATING: "[notify every x seconds, optional, default = 7200]"
+      SHORTCUT_TOKEN: "[clubhouse's shortcut API Token, obtainable via: https://app.shortcut.com/{organization}/settings/account/api-tokens]"
+    depends_on:
+      - db
+
+  webhook:
+    image: ojalmeida/shortcut-telegram-integration-webhook:1.0
+    ports:
+      - "8080:8080"
+    environment:
+      DB_ADDR: db:5432
+      DB_USER: *db_user
+      DB_PASSWORD: *db_pass
+      DB_DBNAME: *db_dbname
+      SHORTCUT_TOKEN: "[clubhouse's shortcut API Token, obtainable via: https://app.shortcut.com/{organization}/settings/account/api-tokens]"
+    depends_on:
+      - db
+
+volumes:
+  db-volume:
